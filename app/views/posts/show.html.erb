@@ -1,0 +1,4 @@
+<h1><%= @post.title %></h1>
+<%= link_to 'Изменить', edit_post_path(@post) %>
+<%= link_to 'Удалить', post_path(@post), method: :delete, data: {confirm: 'Вы уверены, что хотите удалить пост?'} %>
+<p><%= @post.body %></p>
