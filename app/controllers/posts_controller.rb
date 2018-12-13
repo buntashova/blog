@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-	
+
 	before_action :set_post, only: [ :show, :edit, :update, :destroy]
 
 	def index
@@ -16,9 +16,9 @@ class PostsController < ApplicationController
 	def create
 		@post = Post.new(post_params)
 		if @post.save
-			redirect_to @post
+			redirect_to @post, success: 'Статья успешно создана'
 		else
-			render :new
+			render :new, danger: 'Ошибка при создании статьи'
 		end
 	end
 
@@ -27,19 +27,19 @@ class PostsController < ApplicationController
 
 	def update
 		if @post.update_attributes(post_params)
-			redirect_to @post
+			redirect_to @post, info: 'Статья успешно изменена'
 		else
-			render :edit
+			render :edit, danger: 'Ошибка при изменении статьи'
 		end
 	end
 
 	def destroy
 		@post.destroy
-		redirect_to posts_path
+		redirect_to posts_path, info: 'Статья успешно удалена'
 	end
 
 	private
-	
+
 	def set_post
 		@post = Post.find(params[:id])
 	end
