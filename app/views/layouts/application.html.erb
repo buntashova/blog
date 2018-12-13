@@ -11,7 +11,7 @@
 
   <body>
      <div class="container">
-      <nav class="navbar navbar-light bg-faded">
+      <nav class="navbar navbar-light bg-light">
         <ul class="nav navbar-nav">
           <li class="nav-item active">
             <a class="nav-link" href="<%= posts_path %>">Статьи</a>
@@ -20,11 +20,13 @@
             <a class="nav-link" href="#">Контакты</a>
           </li>
         </ul>
-        <%= link_to 'Новая статья', new_post_path, class: 'btn btn-outline-primary pull-xs-right' %> # выравнивание по правому краю
+        <form class="form-inline">
+        <%= link_to 'Новая статья', new_post_path, class: 'btn btn-outline-primary pull-xs-right' %> <!-- выравнивание по правому краю -->
+        </form>
       </nav>
     </div>
 
-    <div> class="container main">
+    <div class="container main">
       <%= yield %>
     </div>
   </body>
