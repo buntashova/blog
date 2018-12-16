@@ -1,0 +1,11 @@
+ru:
+  common:
+    back: 'Назад'
+  posts:
+    new:
+      title: 'Новая статья'
+      save: 'Создать статью'
+    edit: 
+      title: 'Редактирование статьи'
+    index:
+      title: 'Статьи'
