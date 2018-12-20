@@ -27,7 +27,7 @@ class PostsController < ApplicationController
 
 	def update
 		if @post.update_attributes(post_params)
-			redirect_to @post, info: 'Статья успешно изменена'
+			redirect_to @post, notice: 'Статья успешно изменена'
 		else
 			render :edit, danger: 'Ошибка при изменении статьи'
 		end
@@ -35,7 +35,7 @@ class PostsController < ApplicationController
 
 	def destroy
 		@post.destroy
-		redirect_to posts_path, info: 'Статья успешно удалена'
+		redirect_to posts_path, notice: 'Статья успешно удалена'
 	end
 
 	private
