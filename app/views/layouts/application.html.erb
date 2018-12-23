@@ -16,7 +16,7 @@
           <li class="nav-item active">
             <a class="nav-link" href="<%= posts_path %>">Статьи</a>
           </li>
-          <% if user_signed_in? %>
+          <% if can? :manage, Post %>
           <li class="nav-item">
             <a class="nav-link" href="<%= new_post_path %>">Новая статья</a>
           </li>
@@ -25,6 +25,11 @@
         <ul class="navbar-nav pull-xs-right">
              <% if user_signed_in? %>
                <li class="nav-item">
+                 <% if can? :manage, Post %>
+                   Администратор:
+                 <% else %>
+                   Пользователь:
+                 <% end %>
                  <%= current_user.email %>
                </li>
                <li class="nav-item">

@@ -10,6 +10,9 @@ class PostsController < ApplicationController
 	end
 
 	def new
+		if cannot? :manage, Post
+			redirect_to posts_path, danger: 'У вас нет прав на создание статьи'
+		end
 		@post = Post.new
 	end
 
@@ -23,9 +26,15 @@ class PostsController < ApplicationController
 	end
 
 	def edit
+		if cannot? :manage, Post
+			redirect_to posts_path, danger: 'У вас нет прав на редактирование статьи'
+		end
 	end
 
 	def update
+		if cannot? :manage, Post
+			redirect_to posts_path, danger: 'У вас нет прав на изменение статьи'
+		end
 		if @post.update_attributes(post_params)
 			redirect_to @post, notice: 'Статья успешно изменена'
 		else
@@ -34,6 +43,9 @@ class PostsController < ApplicationController
 	end
 
 	def destroy
+		if cannot? :manage, Post
+			redirect_to posts_path, danger: 'У вас нет прав на удаление статьи'
+		end
 		@post.destroy
 		redirect_to posts_path, notice: 'Статья успешно удалена'
 	end

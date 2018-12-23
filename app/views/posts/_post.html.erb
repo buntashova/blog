@@ -3,7 +3,7 @@
     <h2><%= link_to post.title, post_path(post) %></h2>
     <small>
       <time><%= post.created_at.to_date.strftime("%d %B, %Y") %></time>
-      <% if user_signed_in? %>
+      <% if can? :manage, Post %>
          |
          <%= link_to 'Изменить', edit_post_path(post) %>
          |
