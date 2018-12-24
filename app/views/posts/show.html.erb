@@ -3,7 +3,7 @@
     <h1><%= @post.title %></h1>
     <small>
       <time><%= @post.created_at.to_date.strftime("%d %B, %Y") %></time>
-      <% if user_signed_in? %>
+      <% if can? :manage, Post %>
          |
          <%= link_to 'Изменить', edit_post_path(@post) %>
          |
@@ -15,8 +15,9 @@
   <section class="post-body">
     <%= @post.body %>
   </section>
-
+  
   <section class="post-body">
     <%= commontator_thread(@post) %>
   </section>
 </article>
+

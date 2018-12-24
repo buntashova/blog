@@ -71,4 +71,6 @@ gem 'tzinfo-data'
 gem 'devise'
 gem 'devise-i18n'
 gem "letter_opener", :group => :development
+gem 'rolify'
+gem 'cancancan'
 gem 'commontator', '~> 5.1.0'
