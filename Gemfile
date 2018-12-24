@@ -74,3 +74,5 @@ gem "letter_opener", :group => :development
 gem 'rolify'
 gem 'cancancan'
 gem 'commontator', '~> 5.1.0'
+gem 'carrierwave', '~> 1.0'
+gem "mini_magick"
