@@ -10,4 +10,6 @@ class User < ApplicationRecord
   def assign_default_role
     self.add_role(:user) if self.roles.blank?
   end
+
+  acts_as_commontator
 end
