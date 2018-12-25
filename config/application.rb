@@ -17,5 +17,6 @@ module Blog
     # the framework and any gems in your application.
     config.time_zone = 'Novosibirsk'
     config.i18n.default_locale = :ru
+    config.i18n.load_path += Dir[root.join('config', 'locales', '**', '*.{rb,yml}')]
   end
 end

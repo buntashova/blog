@@ -75,4 +75,4 @@ ru:
         open: Комментарии
   time:
     formats:
-      commontator: "%b %d %Y в %I:%M%p %Z"
+      commontator: "%d.%m.%Y в %H:%M %Z"

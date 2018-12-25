@@ -97,4 +97,4 @@ en:
         open: Comments
   time:
     formats:
-      commontator: "%b %d %Y at %I:%M%p %Z"
+      commontator: "%d.%m.%Y в %H:%M %Z"
