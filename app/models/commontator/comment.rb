@@ -94,6 +94,7 @@ module Commontator
     def can_be_deleted_by?(user)
       mod_perm = thread.config.moderator_permissions.to_sym
       return true if thread.can_be_edited_by?(user) &&\
+                     user.has_role?(:admin) &&\
                      (mod_perm == :e ||\
                        mod_perm == :d)
       comment_del = thread.config.comment_deletion.to_sym
