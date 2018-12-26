@@ -34,7 +34,7 @@ Commontator.configure do |config|
   # Arguments: a user (acts_as_commontator)
   # Returns: the user's name (String)
   # Default: ->(user) { I18n.t('commontator.anonymous') } (all users are anonymous)
-  config.user_name_proc = ->(user) { I18n.t('commontator.anonymous') }
+  config.user_name_proc = ->(user) { user.email }
 
   # user_link_proc
   # Type: Proc
@@ -108,7 +108,7 @@ Commontator.configure do |config|
   # Returns: a Boolean, true if and only if the user is a moderator for that thread
   # If you want global moderators, make this proc true for them regardless of thread
   # Default: ->(thread, user) { false } (no moderators)
-  config.thread_moderator_proc = ->(thread, user) { false }
+  config.thread_moderator_proc = ->(thread, user) { true }
 
   # comment_editing
   # Type: Symbol
@@ -198,7 +198,7 @@ Commontator.configure do |config|
   # Set to nil to disable pagination
   # Any other value requires the will_paginate gem
   # Default: nil (no pagination)
-  config.comments_per_page = nil
+  config.comments_per_page = 3
 
   # thread_subscription
   # Type: Symbol
