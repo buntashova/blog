@@ -25,8 +25,6 @@ Commontator.configure do |config|
   # Default: ->(view) { '$("#error_explanation").remove();' }
   config.javascript_proc = ->(view) { '$("#error_explanation").remove();' }
 
-
-
   # User (acts_as_commontator) Configuration
 
   # user_name_proc
@@ -77,8 +75,6 @@ Commontator.configure do |config|
   # the address returned; you can prevent it from being sent by returning a blank String
   # Default: ->(user, mailer) { user.try(:email) || '' }
   config.user_email_proc = ->(user, mailer) { user.try(:email) || '' }
-
-
 
   # Thread/Commontable (acts_as_commontable) Configuration
 
@@ -232,7 +228,8 @@ Commontator.configure do |config|
   # Default: ->(thread) {
   #                   "#{thread.commontable.class.name} ##{thread.commontable.id}" }
   config.commontable_name_proc = ->(thread) {
-    "#{thread.commontable.class.name} ##{thread.commontable.id}" }
+    "#{thread.commontable.class.name} ##{thread.commontable.id}"
+  }
 
   # comment_url_proc
   # Type: Proc
