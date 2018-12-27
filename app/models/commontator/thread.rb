@@ -17,6 +17,7 @@ module Commontator
 
     def will_paginate?
       return false if config.comments_per_page.nil? || !comments.respond_to?(:paginate)
+
       require 'commontator/link_renderer'
       true
     end
@@ -28,6 +29,7 @@ module Commontator
     def filtered_comments
       cf = config.comment_filter
       return comments if cf.nil?
+
       comments.where(cf)
     end
 
@@ -45,11 +47,13 @@ module Commontator
     def paginated_comments(page = 1, per_page = config.comments_per_page)
       oc = ordered_comments
       return oc unless will_paginate?
+
       oc.paginate(page: page, per_page: per_page)
     end
 
     def new_comment_page(per_page = config.comments_per_page)
       return 1 if per_page.nil? || per_page.to_i <= 0
+
       comment_index = \
         case config.comment_order.to_sym
         when :l
@@ -65,7 +69,7 @@ module Commontator
         else
           filtered_comments.count # Last comment
         end
-      (comment_index.to_f/per_page.to_i).ceil
+      (comment_index.to_f / per_page.to_i).ceil
     end
 
     def is_closed?
@@ -74,6 +78,7 @@ module Commontator
 
     def close(user = nil)
       return false if is_closed?
+
       self.closed_at = Time.now
       self.closer = user
       save
@@ -81,21 +86,24 @@ module Commontator
 
     def reopen
       return false unless is_closed? && !commontable.nil?
+
       self.closed_at = nil
       save
     end
 
     def subscribers
-      subscriptions.collect{|s| s.subscriber}
+      subscriptions.collect { |s| s.subscriber }
     end
 
     def subscription_for(subscriber)
       return nil if !subscriber || !subscriber.is_commontator
+
       subscriber.subscriptions.where(thread_id: self.id).first
     end
 
     def subscribe(subscriber)
       return false unless subscriber.is_commontator && !subscription_for(subscriber)
+
       subscription = Subscription.new
       subscription.subscriber = subscriber
       subscription.thread = self
@@ -105,12 +113,14 @@ module Commontator
     def unsubscribe(subscriber)
       subscription = subscription_for(subscriber)
       return false unless subscription
+
       subscription.destroy
     end
 
     def mark_as_read_for(subscriber)
       subscription = subscription_for(subscriber)
       return false unless subscription
+
       subscription.touch
     end
 
@@ -118,6 +128,7 @@ module Commontator
     # The old thread is kept in the database for archival purposes
     def clear
       return if commontable.blank? || !is_closed?
+
       new_thread = Thread.new
       new_thread.commontable = commontable
 
@@ -139,21 +150,22 @@ module Commontator
     # Reader capabilities (user can be nil or false)
     def can_be_read_by?(user)
       return true if can_be_edited_by?(user)
-      !commontable.nil? &&\
-      config.thread_read_proc.call(self, user)
+
+      !commontable.nil? && \
+        config.thread_read_proc.call(self, user)
     end
 
     # Thread moderator capabilities
     def can_be_edited_by?(user)
-      !commontable.nil? && !user.nil? && user.is_commontator && user.has_role?(:admin) &&\
-      config.thread_moderator_proc.call(self, user)
+      !commontable.nil? && !user.nil? && user.is_commontator && user.has_role?(:admin) && \
+        config.thread_moderator_proc.call(self, user)
     end
 
     def can_subscribe?(user)
       thread_sub = config.thread_subscription.to_sym
-      !is_closed? && !user.nil? && user.is_commontator &&\
-      (thread_sub == :m || thread_sub == :b) &&\
-      can_be_read_by?(user)
+      !is_closed? && !user.nil? && user.is_commontator && \
+        (thread_sub == :m || thread_sub == :b) && \
+        can_be_read_by?(user)
     end
   end
 end
