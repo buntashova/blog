@@ -78,3 +78,5 @@ gem 'carrierwave', '~> 1.0'
 gem "mini_magick"
 gem 'will_paginate'
 gem 'rubocop', '~> 0.61.1', require: false
+gem 'rspec'
+gem 'rspec-rails'
