@@ -13,5 +13,15 @@ RSpec.describe Post, type: :model do
       let(:attrs) { { title: 'title', body: 'body' } }
       it { is_expected.not_to be_valid }
     end
+
+    context 'title is not filled' do
+      let(:attrs) { { summary: 'summary', body: 'body' } }
+      it { is_expected.not_to be_valid }
+    end
+
+    context 'body is not filled' do
+      let(:attrs) { { title: 'title', summary: 'summary' } }
+      it { is_expected.not_to be_valid }
+    end
   end
 end
