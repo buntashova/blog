@@ -53,33 +53,34 @@ RSpec.describe PostsController, type: :controller do
     end
   end
 
+  describe "GET #destroy" do
+    it "returns redirect_to posts_path because user not admin" do
+      user = User.create!(email: "user@test.com", password: "password")
+      user.confirm
+      sign_in user
+      post = Post.create(title: 'title', summary: 'summary', body: 'body')
+      get :destroy, params: {id: post.to_param}
+      expect(response).to redirect_to(posts_path)
+    end
+  end
 
-  # describe "GET #destroy" do
-  #   it "returns redirect_to posts_path because user not admin" do
-  #     user = User.create!(email: "user@test.com", password: "password")
-  #     user.confirm
-  #     sign_in user
-  #     post = Post.create(title: 'title', summary: 'summary', body: 'body')
-  #     get :destroy, params: {id: post.to_param}
-  #     expect(response).to redirect_to(posts_path)
-  #   end
-  # end
-
-  # describe "GET #destroy" do
-  #   it "returns successful because user is admin" do
-  #     user = User.create!(email: "user@test.com", password: "password")
-  #     user.confirm
-  #     user.add_role("admin")
-  #     sign_in user
-  #     post = Post.create(title: 'title', summary: 'summary', body: 'body')
-  #     get :destroy, params: {id: post.to_param}
-  #     expect(response).to redirect_to(posts_path)
-  #   end
-  # end
+  describe "GET #destroy" do
+    it "returns redirect_to posts_path because user is admin" do
+      user = User.create!(email: "user@test.com", password: "password")
+      user.confirm
+      user.add_role("admin")
+      sign_in user
+      post = Post.create(title: 'title', summary: 'summary', body: 'body')
+      get :destroy, params: {id: post.to_param}
+      expect(response).to redirect_to(posts_path)
+    end
+  end
 
   describe "POST #create" do
     it "creates a new Post" do
-      # @request.env["devise.mapping"] = Devise.mappings[:admin]
+      user = User.create!(email: "user@test.com", password: "password")
+      user.confirm
+      sign_in user
       expect {
         post = Post.create(title: "title", summary: "summary", body: "body")
       }.to change(Post, :count).by(1)
