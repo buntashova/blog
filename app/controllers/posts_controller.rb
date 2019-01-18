@@ -45,10 +45,10 @@ class PostsController < ApplicationController
 
   def destroy
     if cannot? :manage, Post
-      redirect_to posts_path, danger: 'У вас нет прав на удаление статьи'
+      redirect_to posts_path, danger: 'У вас нет прав на удаление статьи' and return
     end
     @post.destroy
-    redirect_to posts_path, notice: 'Статья успешно удалена'
+    redirect_to posts_path, notice: 'Статья успешно удалена' and return
   end
 
   private
