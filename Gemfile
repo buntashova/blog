@@ -81,3 +81,4 @@ gem 'will_paginate'
 gem 'rubocop', '~> 0.61.1', require: false
 gem 'rspec'
 gem 'rspec-rails'
+gem 'factory_bot_rails', :group => [ :development, :test ]
