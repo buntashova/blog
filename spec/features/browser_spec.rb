@@ -19,7 +19,7 @@ RSpec.feature "Browser", type: :feature do
     end
 
     it "reconfirms me" do
-      User.create!(email: "user@test.com", password: "password")
+      create(:user)
       visit '/users/sign_up'
       click_link 'Не получили письмо с подтверждением?'
       within("#new_user") do
@@ -34,7 +34,7 @@ RSpec.feature "Browser", type: :feature do
     end
 
     it "resets my password" do
-      user = User.create!(email: "user@test.com", password: "password")
+      user = create(:user)
       user.confirm
       visit '/users/sign_in'
       click_link 'Забыли пароль?'
@@ -58,7 +58,7 @@ RSpec.feature "Browser", type: :feature do
 
   describe "the login process", type: :feature do
     it "logs me in" do
-      user = User.create!(email: "user@test.com", password: "password")
+      user = create(:user)
       user.confirm
       visit '/'
       click_link 'Вход'
@@ -72,7 +72,7 @@ RSpec.feature "Browser", type: :feature do
     end
 
     it "not logs me in without confirm" do
-      User.create!(email: "user@test.com", password: "password")
+      create(:user)
       visit '/'
       click_link 'Вход'
       within("#new_user") do

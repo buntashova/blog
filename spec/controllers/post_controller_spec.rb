@@ -10,7 +10,7 @@ RSpec.describe PostsController, type: :controller do
 
   describe "GET #new" do
     it "returns redirect_to posts_path because user not admin" do
-      user = User.create!(email: "user@test.com", password: "password")
+      user = build(:user)
       user.confirm
       sign_in user
       get :new
@@ -20,7 +20,7 @@ RSpec.describe PostsController, type: :controller do
 
   describe "GET #new" do
     it "returns successful because user is admin" do
-      user = User.create!(email: "user@test.com", password: "password")
+      user = build(:user)
       user.confirm
       user.add_role("admin")
       sign_in user
@@ -31,10 +31,10 @@ RSpec.describe PostsController, type: :controller do
 
   describe "GET #edit" do
     it "returns redirect_to posts_path because user not admin" do
-      user = User.create!(email: "user@test.com", password: "password")
+      user = build(:user)
       user.confirm
       sign_in user
-      post = Post.create(title: 'title', summary: 'summary', body: 'body')
+      post = create(:post)
       get :edit, params: { id: post.to_param }
       expect(response).to redirect_to(posts_path)
     end
@@ -42,11 +42,11 @@ RSpec.describe PostsController, type: :controller do
 
   describe "GET #edit" do
     it "returns successful because user is admin" do
-      user = User.create!(email: "user@test.com", password: "password")
+      user = build(:user)
       user.confirm
       user.add_role("admin")
       sign_in user
-      post = Post.create(title: 'title', summary: 'summary', body: 'body')
+      post = create(:post)
       get :edit, params: { id: post.to_param }
       expect(response).to be_successful
     end
@@ -54,10 +54,10 @@ RSpec.describe PostsController, type: :controller do
 
   describe "GET #destroy" do
     it "returns redirect_to posts_path because user not admin" do
-      user = User.create!(email: "user@test.com", password: "password")
+      user = build(:user)
       user.confirm
       sign_in user
-      post = Post.create(title: 'title', summary: 'summary', body: 'body')
+      post = create(:post)
       get :destroy, params: { id: post.to_param }
       expect(response).to redirect_to(posts_path)
     end
@@ -65,11 +65,11 @@ RSpec.describe PostsController, type: :controller do
 
   describe "GET #destroy" do
     it "returns redirect_to posts_path because user is admin" do
-      user = User.create!(email: "user@test.com", password: "password")
+      user = build(:user)
       user.confirm
       user.add_role("admin")
       sign_in user
-      post = Post.create(title: 'title', summary: 'summary', body: 'body')
+      post = create(:post)
       get :destroy, params: { id: post.to_param }
       expect(response).to redirect_to(posts_path)
     end
@@ -77,11 +77,11 @@ RSpec.describe PostsController, type: :controller do
 
   describe "POST #create" do
     it "creates a new Post" do
-      user = User.create!(email: "user@test.com", password: "password")
+      user = build(:user)
       user.confirm
       sign_in user
       expect {
-        Post.create(title: "title", summary: "summary", body: "body")
+        create(:post)
       }.to change(Post, :count).by(1)
     end
   end
