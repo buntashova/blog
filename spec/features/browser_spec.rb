@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "Browsers", type: :feature do
+RSpec.feature "Browser", type: :feature do
   describe "the signin process", type: :feature do
     it "signs me in" do
       visit '/'
@@ -22,7 +22,9 @@ RSpec.feature "Browsers", type: :feature do
       User.create!(email: "user@test.com", password: "password")
       visit '/users/sign_up'
       click_link 'Не получили письмо с подтверждением?'
-      fill_in 'Email', with: 'user@test.com'
+      within("#new_user") do
+        fill_in 'Email', with: 'user@test.com'
+      end
       click_button 'Отправить подтверждение снова'
       expect(page).to have_content 'В течение нескольких минут вы получите письмо с инструкциями по подтверждению вашей учётной записи.'
       open_email('user@test.com')
@@ -36,15 +38,19 @@ RSpec.feature "Browsers", type: :feature do
       user.confirm
       visit '/users/sign_in'
       click_link 'Забыли пароль?'
-      fill_in 'Email', with: 'user@test.com'
+      within("#new_user") do
+        fill_in 'Email', with: 'user@test.com'
+      end
       click_button 'Отправить сброс пароля'
       expect(page).to have_content 'В течение нескольких минут вы получите письмо с инструкциями по восстановлению вашего пароля.'
       open_email('user@test.com')
       expect(current_email).to have_content 'Здраствуйте, user@test.com!'
       current_email.click_link 'Изменить пароль'
       expect(page).to have_content 'Изменение пароля'
-      fill_in 'Пароль', with: 'new_password'
-      fill_in 'Подтверждение пароля', with: 'new_password'
+      within("#new_user") do
+        fill_in 'Пароль', with: 'new_password'
+        fill_in 'Подтверждение пароля', with: 'new_password'
+      end
       click_button 'Изменить пароль'
       expect(page).to have_content 'Ваш пароль успешно изменён. Теперь вы вошли в систему.'
     end
